@@ -27,6 +27,12 @@ app.get("/users/:id", (req, res) => {
     .catch(err => console.log(err));
 });
 
+app.delete("/users/:id", (req, res) => {
+  User.delete(req.params.id)
+    .then(user => res.json(user))
+    .catch(err => console.log(err));
+});
+
 app.set("port", process.env.PORT || 3001);
 
 app.listen(app.get("port"), () => {
