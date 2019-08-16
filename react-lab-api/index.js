@@ -4,6 +4,7 @@ const app = express();
 const cors = require("cors");
 const User = require("./db/models");
 
+
 app.use(parser.json());
 app.use(cors());
 
@@ -27,8 +28,16 @@ app.get("/users/:id", (req, res) => {
     .catch(err => console.log(err));
 });
 
-app.delete("/users/:id", (req, res) => {
-  User.delete(req.params.id)
+app.put("/:id", (req, res) => {
+  User.findOneAndUpdate({ _id: req.params.id }, req.body, {
+    new: true
+  })
+    .then(user => res.json(user))
+    .catch(err => console.log(err));
+});
+
+app.delete("/:id", (req, res) => {
+  User.findOneAndDelete({ _id: req.params.id })
     .then(user => res.json(user))
     .catch(err => console.log(err));
 });
